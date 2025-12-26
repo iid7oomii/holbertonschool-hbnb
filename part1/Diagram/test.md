@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
 participant User
 participant API
@@ -10,3 +11,4 @@ BusinessLogic->>Database: Save Data
 Database-->>BusinessLogic: Confirm Save
 BusinessLogic-->>API: Return Response
 API-->>User: Return Success/Failure
+```
