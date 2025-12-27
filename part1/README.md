@@ -1,3 +1,4 @@
+\
 
 # HBnB Evolution — Part 1: Technical Documentation (UML)
 
@@ -85,29 +86,28 @@ The application follows a **3-layer architecture**:
 
 ```mermaid
 flowchart TB
-	%% High-level packages (layered) + Facade communication
+  %% High-level packages (layered) + Facade communication
 
-	subgraph Presentation[Presentation Layer]
-		API[API / Controllers]
-	end
+  subgraph Presentation[Presentation Layer]
+    API[API / Controllers]
+  end
 
-	subgraph Business[Business Logic Layer]
-		FACADE[HBnBFacade]
-		SVC[Use-Case Services]
-		DOM[Domain Models]
-	end
+  subgraph Business[Business Logic Layer]
+    FACADE[HBnBFacade]
+    SVC[Use-Case Services]
+    DOM[Domain Models]
+  end
 
-	subgraph Persistence[Persistence Layer]
-		REPO[Repository Interfaces]
-		DB[(Database
-		(Part 3))]
-	end
+  subgraph Persistence[Persistence Layer]
+    REPO[Repository Interfaces]
+    DB[(Database<br/>(Part 3))]
+  end
 
-	API -->|calls| FACADE
-	FACADE -->|orchestrates| SVC
-	SVC -->|uses| DOM
-	SVC -->|CRUD via| REPO
-	REPO -->|persists| DB
+  API -->|calls| FACADE
+  FACADE -->|orchestrates| SVC
+  SVC -->|uses| DOM
+  SVC -->|CRUD via| REPO
+  REPO -->|persists| DB
 ```
 
 ---
