@@ -1,5 +1,3 @@
-\
-
 # HBnB Evolution — Part 1: Technical Documentation (UML)
 
 ## Team
@@ -100,7 +98,7 @@ flowchart TB
 
   subgraph Persistence[Persistence Layer]
     REPO[Repository Interfaces]
-    DB[(Database<br/>(Part 3))]
+		DB[(Database - Part 3)]
   end
 
   API -->|calls| FACADE
