@@ -1,4 +1,3 @@
-\
 
 # HBnB Evolution — Part 1: Technical Documentation (UML)
 
