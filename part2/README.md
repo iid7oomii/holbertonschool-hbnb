@@ -171,15 +171,28 @@ http://127.0.0.1:5000/api/v1/
 
 **Automated Tests**
 
+```bash
 pytest test_api.py -v
+```
+
 
 **Individual Endpoint Tests**
 
+
+```bash
+pytest test_api.py -v
+```
+
+```bash
 python test_user_endpoints.py
+```
 
+```bash
 python test_amenity_endpoints.py
+```
 
+```bash
 python test_place_endpoints.py
-
+```
 
 
