@@ -171,7 +171,11 @@ http://127.0.0.1:5000/api/v1/
 pytest test_api.py -v
 
 **Individual Endpoint Tests**
+
 python test_user_endpoints.py
+
 python test_amenity_endpoints.py
+
 python test_place_endpoints.py
+
 
