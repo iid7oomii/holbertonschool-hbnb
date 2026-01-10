@@ -279,11 +279,7 @@ python run.py
 
 ---
 
-## 🧪 الاختبار (Testing)
-
-### اختبارات Pytest
-
-<div dTesting
+## 🧪 Testing
 
 ### Pytest Tests
 
@@ -310,19 +306,11 @@ bash curl_tests.sh
 
 ### Manual Testing (Thunder Client / Postman)
 
-See حالات HTTP والأخطاء
+See: [📖 TESTING_GUIDE.md](part2/TESTING_GUIDE.md)
 
-| Status Code          | المعنى           | متى يظهر         |
-| -------------------- | ---------------- | ---------------- |
-| `200 OK`             | نجاح العملية     | GET, PUT         |
-| `201 Created`        | تم الإنشاء بنجاح | POST             |
-| `204 No Content`     | حُذف بنجاح       | DELETE           |
-| `400 Bad Request`    | بيانات غير صحيحة | Validation Error |
-| `404 Not Found`      | المورد غير موجود | Wrong ID         |
-| `409 Conflict`       | تضارب بالبيانات  | Duplicate email  |
-| `500 Internal Error` | خطأ في السيرفر   | Server Error     |
+---
 
----HTTP Status Codes & Errors
+## 📊 HTTP Status Codes & Errors
 
 | Status Code          | Meaning              | When It Appears  |
 | -------------------- | -------------------- | ---------------- |
@@ -332,14 +320,25 @@ See حالات HTTP والأخطاء
 | `400 Bad Request`    | Invalid data         | Validation Error |
 | `404 Not Found`      | Resource not found   | Wrong ID         |
 | `409 Conflict`       | Data conflict        | Duplicate email  |
-| `500 Internal Error` | Server error acters  |
+| `500 Internal Error` | Server error         | Server Error     |
 
+---
+
+## 📝 Data Validation
+
+### Applied Validation Rules
+
+#### Users
+
+- ✅ Email format validation (must contain @)
+- ✅ Email uniqueness
+- ✅ First name and last name: 1-50 characters
 - ✅ Password: minimum 6 characters
 
 #### Places
 
 - ✅ Title: 1-100 characters
-- ✅ Applied Validation Rulesive
+- ✅ Price: must be positive
 - ✅ Latitude: -90 to 90
 - ✅ Longitude: -180 to 180
 - ✅ Owner must exist
@@ -357,19 +356,7 @@ See حالات HTTP والأخطاء
 
 ---
 
-## 🎨 Design Patterns المستخدمة
-
-### 1. Facade Pattern
-
-- **HBnBFacade**: نقطة دخول موحدة للـ Business Logic
-- يُخفي التعقيد الداخلي عن طبقة API
-- يُسهّل الصيانة والاختبار
-
-### 2. Repository Pattern
-
-- **InMemoryRepository**: abstraction فوق طبقة التخزين
-- سهولة استبدال التخزين المؤقت بقاعدة بيانات لاحقاً
-- فصل منطق الأعمال عن Used
+## 🎨 Design Patterns Used
 
 ### 1. Facade Pattern
 
@@ -385,14 +372,14 @@ See حالات HTTP والأخطاء
 
 ### 3. RESTful Design
 
-- Proper use of HTTP MethodsQLAlchemy + PostgreSQL/MySQL)
-- 👤 **User Sessions**
-- 🔒 **Password Hashing** (bcrypt)
-- 📧 **Email Validation**
-- 🖼️ **Image Upload** for places
-- 🔍 **Advanced Search & Filtering**
-- 📄 **Pagination**
-  Coming Soon
+- Proper use of HTTP Methods
+- Resource-based URLs
+- Stateless communication
+- Proper status codes
+
+---
+
+## 🔮 Part 3 - Coming Soon
 
 Upcoming Features:
 
@@ -407,12 +394,15 @@ Upcoming Features:
 
 ---
 
-## 👥 Team](part1/README.md) - التصميم المعماري و UML
+## 👥 Team
 
-- [📄 Part 2 README](part2/README.md) - تفاصيل API والتطبيق
-- [📖 Testing Guide](part2/TESTING_GUIDE.md) - دليل الاختبار الشامل
+- **ABDULAZIZ ALRASHDI**
+- **ABDULRAHMAN ALGHAMDI**
+- **ABDULLAH ALSALEM**
 
-### الResources & Documentation
+---
+
+## 📚 Resources & Documentation
 
 ### Internal Documentation
 
@@ -422,15 +412,14 @@ Upcoming Features:
 
 ### External Resources
 
-## 🐛 استكشاف الأخطاء (Troubleshooting)
+- [Flask Documentation](https://flask.palletsprojects.com/)
+- [Flask-RestX](https://flask-restx.readthedocs.io/)
+- [REST API Best Practices](https://restfulapi.net/)
+- [UML Diagrams with Mermaid](https://mermaid.js.org/)
 
-### مشكلة: 404 Not Found
+---
 
-````bash
-# تأكد من استخدام الـ base URL الصحيح
-http://localhost:5000/api/v1/users/  ✅
-http://localhost:5000/users/         ❌
-```Troubleshooting
+## 🐛 Troubleshooting
 
 ### Issue: 404 Not Found
 
@@ -438,7 +427,7 @@ http://localhost:5000/users/         ❌
 # Make sure to use the correct base URL
 http://localhost:5000/api/v1/users/  ✅
 http://localhost:5000/users/         ❌
-````
+```
 
 ### Issue: Server Not Running
 
@@ -470,6 +459,14 @@ This project is educational and owned by **Holberton School**.
 
 ## 📧 Contact
 
-For questions and inquiries, contact the project team
+For questions and inquiries, contact the project team.
+
+---
+
+<div align="center">
+
+**Built with ❤️ for Holberton School**
+
+`Version: 2.0 - Part 2 Completed`
 
 </div>
