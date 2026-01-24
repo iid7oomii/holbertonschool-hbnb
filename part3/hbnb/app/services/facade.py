@@ -45,6 +45,8 @@ class HBnBFacade:
             user.last_name = user_data['last_name']
         if 'email' in user_data:
             user.email = user_data['email']
+        if 'password' in user_data:
+            user.hash_password(user_data['password'])
         if 'is_admin' in user_data:
             user.is_admin = user_data['is_admin']
 
