@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restx import Api
-from hbnb.app.extensions import bcrypt
+from hbnb.app.extensions import bcrypt, jwt
 
 
 def create_app(config_class="config.DevelopmentConfig"):
@@ -16,8 +16,9 @@ def create_app(config_class="config.DevelopmentConfig"):
     app = Flask(__name__)
     app.config.from_object(config_class)
     
-    # Initialize bcrypt
+    # Initialize extensions
     bcrypt.init_app(app)
+    jwt.init_app(app)
     
     api = Api(
         app,

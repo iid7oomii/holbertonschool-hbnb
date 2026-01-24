@@ -6,11 +6,26 @@ from hbnb.app.models.review import Review
 
 
 class HBnBFacade:
+    """
+    Facade pattern implementation for the HBnB application.
+    Uses singleton pattern to ensure all endpoints share the same repositories.
+    """
+    _instance = None
+    _repositories_initialized = False
+    
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super(HBnBFacade, cls).__new__(cls)
+        return cls._instance
+    
     def __init__(self):
-        self.user_repo = InMemoryRepository()
-        self.place_repo = InMemoryRepository()
-        self.review_repo = InMemoryRepository()
-        self.amenity_repo = InMemoryRepository()
+        # Only initialize repositories once
+        if not HBnBFacade._repositories_initialized:
+            self.user_repo = InMemoryRepository()
+            self.place_repo = InMemoryRepository()
+            self.review_repo = InMemoryRepository()
+            self.amenity_repo = InMemoryRepository()
+            HBnBFacade._repositories_initialized = True
 
     # ===== User Management Methods =====
 

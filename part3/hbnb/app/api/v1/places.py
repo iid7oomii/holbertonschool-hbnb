@@ -1,5 +1,6 @@
 """Place API endpoints for HBnB application"""
 from flask_restx import Namespace, Resource, fields
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from hbnb.app.services.facade import HBnBFacade
 
 api = Namespace('places', description='Place operations')
@@ -89,9 +90,18 @@ class PlaceList(Resource):
     @api.response(201, 'Place successfully created')
     @api.response(400, 'Invalid input data')
     @api.response(404, 'Owner not found')
+    @api.response(401, 'Unauthorized')
+    @jwt_required()
     def post(self):
-        """Create a new place"""
+        """Create a new place (requires authentication)"""
         place_data = api.payload
+        
+        # Get the current user from JWT token
+        current_user_id = get_jwt_identity()
+        
+        # Ensure the owner_id in the payload matches the authenticated user
+        if place_data['owner_id'] != current_user_id:
+            api.abort(401, 'Unauthorized: You can only create places for yourself')
 
         # Validate owner exists
         owner = facade.get_user(place_data['owner_id'])

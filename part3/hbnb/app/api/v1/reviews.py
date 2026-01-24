@@ -1,5 +1,6 @@
 """Review API endpoints for HBnB application"""
 from flask_restx import Namespace, Resource, fields
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from hbnb.app.services.facade import HBnBFacade
 
 api = Namespace('reviews', description='Review operations')
@@ -63,9 +64,18 @@ class ReviewList(Resource):
     @api.response(201, 'Review successfully created')
     @api.response(400, 'Invalid input data')
     @api.response(404, 'User or Place not found')
+    @api.response(401, 'Unauthorized')
+    @jwt_required()
     def post(self):
-        """Create a new review"""
+        """Create a new review (requires authentication)"""
         review_data = api.payload
+        
+        # Get the current user from JWT token
+        current_user_id = get_jwt_identity()
+        
+        # Ensure the user_id in the payload matches the authenticated user
+        if review_data['user_id'] != current_user_id:
+            api.abort(401, 'Unauthorized: You can only create reviews as yourself')
 
         # Validate user exists
         user = facade.get_user(review_data['user_id'])

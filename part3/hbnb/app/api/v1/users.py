@@ -2,6 +2,7 @@
 User API endpoints for HBnB application
 """
 from flask_restx import Namespace, Resource, fields
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from hbnb.app.services.facade import HBnBFacade
 
 api = Namespace('users', description='User operations')
@@ -16,6 +17,12 @@ user_model = api.model('User', {
     'email': fields.String(required=True, description='Email of the user'),
     'password': fields.String(required=True, description='Password of the user'),
     'is_admin': fields.Boolean(description='Admin status', default=False)
+})
+
+# Define the login model
+login_model = api.model('Login', {
+    'email': fields.String(required=True, description='User email'),
+    'password': fields.String(required=True, description='User password')
 })
 
 # Define the user response model (without password)
@@ -87,9 +94,18 @@ class UserResource(Resource):
     @api.response(404, 'User not found')
     @api.response(400, 'Invalid input data')
     @api.response(409, 'Email already registered')
+    @api.response(401, 'Unauthorized')
+    @jwt_required()
     def put(self, user_id):
-        """Update user information"""
+        """Update user information (requires authentication)"""
         user_data = api.payload
+        
+        # Get the current user from JWT token
+        current_user_id = get_jwt_identity()
+        
+        # Users can only update their own profile (unless admin)
+        if current_user_id != user_id:
+            api.abort(401, 'Unauthorized to update this user')
 
         # Check if user exists
         existing_user = facade.get_user(user_id)
@@ -107,3 +123,43 @@ class UserResource(Resource):
             return updated_user, 200
         except ValueError as e:
             api.abort(400, str(e))
+
+
+@api.route('/login')
+class UserLogin(Resource):
+    """Handles user login and JWT token generation"""
+
+    @api.doc('user_login')
+    @api.expect(login_model, validate=True)
+    @api.response(200, 'Login successful')
+    @api.response(401, 'Invalid credentials')
+    def post(self):
+        """Authenticate user and return JWT token"""
+        credentials = api.payload
+        
+        # Get user by email
+        user = facade.get_user_by_email(credentials['email'])
+        
+        # Verify user exists and password is correct
+        if not user or not user.verify_password(credentials['password']):
+            api.abort(401, 'Invalid credentials')
+        
+        # Create JWT token with user identity and additional claims
+        additional_claims = {
+            'is_admin': user.is_admin
+        }
+        access_token = create_access_token(
+            identity=str(user.id),
+            additional_claims=additional_claims
+        )
+        
+        return {
+            'access_token': access_token,
+            'user': {
+                'id': user.id,
+                'email': user.email,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'is_admin': user.is_admin
+            }
+        }, 200
