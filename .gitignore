@@ -1,1 +1,8 @@
 instractions
+test_jwt_authentication.py
+test_jwt_with_curl.sh
+JWT_IMPLEMENTATION.md
+.env
+.env.test
+.pytest_cache/
+__pycache__/

@@ -65,6 +65,7 @@ class ReviewList(Resource):
     @api.response(400, 'Invalid input data')
     @api.response(404, 'User or Place not found')
     @api.response(401, 'Unauthorized')
+    @api.response(403, 'Cannot review own place or duplicate review')
     @jwt_required()
     def post(self):
         """Create a new review (requires authentication)"""
@@ -86,6 +87,16 @@ class ReviewList(Resource):
         place = facade.get_place(review_data['place_id'])
         if not place:
             api.abort(404, 'Place not found')
+        
+        # Prevent users from reviewing their own places
+        if place.owner.id == current_user_id:
+            api.abort(403, 'You cannot review your own place')
+        
+        # Prevent duplicate reviews - check if user already reviewed this place
+        existing_reviews = facade.get_reviews_by_place(review_data['place_id'])
+        for review in existing_reviews:
+            if review.user.id == current_user_id:
+                api.abort(403, 'You have already reviewed this place')
 
         try:
             new_review = facade.create_review(review_data)
@@ -141,14 +152,29 @@ class ReviewResource(Resource):
     @api.response(200, 'Review updated successfully')
     @api.response(404, 'Review not found')
     @api.response(400, 'Invalid input data')
+    @api.response(403, 'Unauthorized to modify this review')
+    @jwt_required()
     def put(self, review_id):
-        """Update review information"""
+        """Update review information (requires authentication and ownership)"""
         review_data = api.payload
+        
+        # Get the current user from JWT token
+        current_user_id = get_jwt_identity()
 
         # Check if review exists
         existing_review = facade.get_review(review_id)
         if not existing_review:
             api.abort(404, 'Review not found')
+        
+        # Debug: print the IDs for troubleshooting
+        print(f"\n[DEBUG] Update Review:")
+        print(f"  Current User ID (from token): {current_user_id}")
+        print(f"  Review Author ID: {existing_review.user.id}")
+        print(f"  Match: {existing_review.user.id == current_user_id}")
+        
+        # Check if the current user is the author of the review
+        if str(existing_review.user.id) != str(current_user_id):
+            api.abort(403, 'Unauthorized: You can only modify your own reviews')
 
         # Validate user if being updated
         if 'user_id' in review_data:
@@ -184,11 +210,20 @@ class ReviewResource(Resource):
     @api.doc('delete_review')
     @api.response(200, 'Review deleted successfully')
     @api.response(404, 'Review not found')
+    @api.response(403, 'Unauthorized to delete this review')
+    @jwt_required()
     def delete(self, review_id):
-        """Delete a review"""
+        """Delete a review (requires authentication and ownership)"""
+        # Get the current user from JWT token
+        current_user_id = get_jwt_identity()
+        
         review = facade.get_review(review_id)
         if not review:
             api.abort(404, 'Review not found')
+        
+        # Check if the current user is the author of the review
+        if review.user.id != current_user_id:
+            api.abort(403, 'Unauthorized: You can only delete your own reviews')
 
         facade.delete_review(review_id)
         return {'message': 'Review deleted successfully'}, 200

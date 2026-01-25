@@ -194,14 +194,29 @@ class PlaceResource(Resource):
     @api.response(200, 'Place updated successfully')
     @api.response(404, 'Place not found')
     @api.response(400, 'Invalid input data')
+    @api.response(403, 'Unauthorized to modify this place')
+    @jwt_required()
     def put(self, place_id):
-        """Update place information"""
+        """Update place information (requires authentication and ownership)"""
         place_data = api.payload
+        
+        # Get the current user from JWT token
+        current_user_id = get_jwt_identity()
 
         # Check if place exists
         existing_place = facade.get_place(place_id)
         if not existing_place:
             api.abort(404, 'Place not found')
+        
+        # Debug: print the IDs for troubleshooting
+        print(f"\n[DEBUG] Update Place:")
+        print(f"  Current User ID (from token): {current_user_id}")
+        print(f"  Place Owner ID: {existing_place.owner.id}")
+        print(f"  Match: {existing_place.owner.id == current_user_id}")
+        
+        # Check if the current user is the owner of the place
+        if str(existing_place.owner.id) != str(current_user_id):
+            api.abort(403, 'Unauthorized: You can only modify your own places')
 
         # Validate owner if being updated
         if 'owner_id' in place_data:
@@ -242,3 +257,26 @@ class PlaceResource(Resource):
             }, 200
         except ValueError as e:
             api.abort(400, str(e))
+    
+    @api.doc('delete_place')
+    @api.response(200, 'Place deleted successfully')
+    @api.response(404, 'Place not found')
+    @api.response(403, 'Unauthorized to delete this place')
+    @jwt_required()
+    def delete(self, place_id):
+        """Delete a place (requires authentication and ownership)"""
+        # Get the current user from JWT token
+        current_user_id = get_jwt_identity()
+        
+        # Check if place exists
+        place = facade.get_place(place_id)
+        if not place:
+            api.abort(404, 'Place not found')
+        
+        # Check if the current user is the owner of the place
+        if place.owner.id != current_user_id:
+            api.abort(403, 'Unauthorized: You can only delete your own places')
+        
+        # Delete the place
+        facade.place_repo.delete(place_id)
+        return {'message': 'Place deleted successfully'}, 200
