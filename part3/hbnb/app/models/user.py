@@ -5,26 +5,34 @@ from typing import Any
 
 from hbnb.app.models.base_model import BaseModel
 from hbnb.app.extensions import bcrypt
+from hbnb.app import db
 
 _EMAIL_RE = re.compile(r"^[^@\s]+@[^@\s]+\.[^@\s]+$")
 
 
 class User(BaseModel):
     """
-    User entity:
+    SQLAlchemy User Model:
     - first_name (required, max 50)
     - last_name  (required, max 50)
-    - email      (required, valid format)
+    - email      (required, valid format, unique)
     - password   (required, hashed)
     - is_admin   (bool, default False)
     """
+    
+    __tablename__ = 'users'
+    
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
+    email = db.Column(db.String(120), nullable=False, unique=True, index=True)
+    password = db.Column(db.String(128), nullable=False)
+    is_admin = db.Column(db.Boolean, default=False, nullable=False)
 
     def __init__(
         self,
         first_name: str,
         last_name: str,
         email: str,
-        password: str = None,
         is_admin: bool = False,
         **kwargs: Any,
     ):
@@ -33,32 +41,21 @@ class User(BaseModel):
         self.last_name = last_name
         self.email = email
         self.is_admin = is_admin
-        self._password = None
-        if password:
-            self.hash_password(password)
+        # Password should be set using hash_password() method after initialization
+        self.password = None
         self.validate()
 
     def hash_password(self, password: str) -> None:
         """Hash the password using bcrypt"""
         if not password:
             raise ValueError("password is required")
-        self._password = bcrypt.generate_password_hash(password).decode('utf-8')
+        self.password = bcrypt.generate_password_hash(password).decode('utf-8')
 
     def verify_password(self, password: str) -> bool:
         """Verify a password against the hashed password"""
-        if not self._password:
+        if not self.password:
             return False
-        return bcrypt.check_password_hash(self._password, password)
-
-    @property
-    def password(self) -> str:
-        """Getter for password - returns the hashed password"""
-        return self._password
-
-    @password.setter
-    def password(self, value: str) -> None:
-        """Setter for password - hashes the password"""
-        self.hash_password(value)
+        return bcrypt.check_password_hash(self.password, password)
 
     def validate(self) -> None:
         if not isinstance(self.first_name, str) or not self.first_name.strip():

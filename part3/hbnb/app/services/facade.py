@@ -1,4 +1,5 @@
-from hbnb.app.persistence.repository import InMemoryRepository, SQLAlchemyRepository
+from hbnb.app.persistence.repository import InMemoryRepository
+from hbnb.app.services.repositories.user_repository import UserRepository
 from hbnb.app.models.user import User
 from hbnb.app.models.amenity import Amenity
 from hbnb.app.models.place import Place
@@ -21,9 +22,8 @@ class HBnBFacade:
     def __init__(self):
         # Only initialize repositories once
         if not HBnBFacade._repositories_initialized:
-            # Use SQLAlchemyRepository for User (Task 5)
-            # Note: User model mapping will be done in Task 6
-            self.user_repo = SQLAlchemyRepository(User)
+            # Use UserRepository with SQLAlchemy (Task 6)
+            self.user_repo = UserRepository()
             
             # Keep InMemory for other entities (will be migrated in future tasks)
             self.place_repo = InMemoryRepository()
@@ -35,7 +35,11 @@ class HBnBFacade:
 
     def create_user(self, user_data):
         """Create a new user"""
+        # Extract password before creating user instance
+        password = user_data.pop('password', None)
         user = User(**user_data)
+        if password:
+            user.hash_password(password)
         self.user_repo.add(user)
         return user
 
@@ -49,7 +53,7 @@ class HBnBFacade:
 
     def get_user_by_email(self, email):
         """Get a user by email"""
-        return self.user_repo.get_by_attribute('email', email)
+        return self.user_repo.get_user_by_email(email)
 
     def update_user(self, user_id, user_data):
         """Update a user's information"""

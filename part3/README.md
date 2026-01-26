@@ -12,12 +12,17 @@ This part introduces JWT authentication, role-based access control, and database
 pip install -r requirements.txt
 ```
 
-#### 2. Run the Application
+#### 2. Initialize Database
 ```bash
-python3 run.py
+python init_db.py
 ```
 
-The application will run on `http://localhost:5000`
+#### 3. Run the Application
+```bash
+python run.py
+```
+
+The application will run on `http://localhost:8000`
 
 ### Configuration
 The application uses a configuration system defined in `config.py`:
@@ -45,6 +50,8 @@ part3/
 - [x] Task 2: JWT Authentication Implementation
 - [x] Task 3: Authenticated User Access Endpoints
 - [x] Task 4: Administrator Access Endpoints
+- [x] Task 5: SQLAlchemy Repository Infrastructure
+- [x] Task 6: User Entity Mapped to SQLAlchemy Model
 
 ### Features
 
@@ -53,6 +60,13 @@ part3/
 - **Password Hashing**: Bcrypt for secure password storage
 - **Role-Based Access Control**: Admin and regular user roles
 - **Protected Endpoints**: Authentication required for sensitive operations
+
+#### Database Integration (Task 6)
+- **SQLAlchemy ORM**: Database abstraction layer
+- **SQLite Database**: Development database (development.db)
+- **User Persistence**: User data stored in database with persistence
+- **Repository Pattern**: SQLAlchemyRepository for User model
+- **Data Integrity**: Unique constraints on email, automatic timestamps
 
 #### Admin Privileges
 - Create and manage users
@@ -80,3 +94,9 @@ See [ADMIN_FEATURES.md](ADMIN_FEATURES.md) for detailed testing instructions.
 ### Documentation
 - **ADMIN_FEATURES.md**: Comprehensive guide to admin features
 - **TESTING_GUIDE.md**: General API testing guide
+- **TASK6_TESTING_GUIDE.md**: SQLAlchemy User Model testing guide with Thunder Client examples
+
+### Database
+- **development.db**: SQLite database file (created after running init_db.py)
+- **User table**: Fully mapped with SQLAlchemy
+- **Other entities**: Currently using InMemoryRepository (will be migrated in future tasks)

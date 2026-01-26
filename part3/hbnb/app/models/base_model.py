@@ -4,29 +4,31 @@
 from __future__ import annotations
 
 import uuid
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Any
+from hbnb.app import db
 
 
-class BaseModel:
+class BaseModel(db.Model):
     """
-    Base model providing:
-    - id (UUID string)
+    SQLAlchemy Base Model providing:
+    - id (UUID string, primary key)
     - created_at (UTC datetime)
     - updated_at (UTC datetime)
     - save(): updates updated_at
     - update(data): set attributes then validate
     """
+    
+    __abstract__ = True  # This ensures SQLAlchemy does not create a table for BaseModel
 
-    def __init__(self, **kwargs: Any):
-        now = datetime.now(timezone.utc)
-
-        self.id: str = kwargs.get("id", str(uuid.uuid4()))
-        self.created_at: datetime = kwargs.get("created_at", now)
-        self.updated_at: datetime = kwargs.get("updated_at", now)
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     def save(self) -> None:
-        self.updated_at = datetime.now(timezone.utc)
+        """Update the updated_at timestamp and commit to database"""
+        self.updated_at = datetime.utcnow()
+        db.session.commit()
 
     def validate(self) -> None:
         """Override in subclasses."""
