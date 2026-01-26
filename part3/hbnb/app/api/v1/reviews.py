@@ -1,11 +1,17 @@
 """Review API endpoints for HBnB application"""
 from flask_restx import Namespace, Resource, fields
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from hbnb.app.services.facade import HBnBFacade
 
 api = Namespace('reviews', description='Review operations')
 
 facade = HBnBFacade()
+
+
+def is_admin():
+    """Helper function to check if the current user is an admin"""
+    claims = get_jwt()
+    return claims.get('is_admin', False)
 
 # Define the review model for input validation
 review_model = api.model('Review', {
@@ -171,9 +177,10 @@ class ReviewResource(Resource):
         print(f"  Current User ID (from token): {current_user_id}")
         print(f"  Review Author ID: {existing_review.user.id}")
         print(f"  Match: {existing_review.user.id == current_user_id}")
+        print(f"  Is Admin: {is_admin()}")
         
-        # Check if the current user is the author of the review
-        if str(existing_review.user.id) != str(current_user_id):
+        # Check if the current user is the author of the review or is admin
+        if str(existing_review.user.id) != str(current_user_id) and not is_admin():
             api.abort(403, 'Unauthorized: You can only modify your own reviews')
 
         # Validate user if being updated
@@ -221,8 +228,8 @@ class ReviewResource(Resource):
         if not review:
             api.abort(404, 'Review not found')
         
-        # Check if the current user is the author of the review
-        if review.user.id != current_user_id:
+        # Check if the current user is the author of the review or is admin
+        if review.user.id != current_user_id and not is_admin():
             api.abort(403, 'Unauthorized: You can only delete your own reviews')
 
         facade.delete_review(review_id)

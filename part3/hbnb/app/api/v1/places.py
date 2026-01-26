@@ -1,11 +1,17 @@
 """Place API endpoints for HBnB application"""
 from flask_restx import Namespace, Resource, fields
-from flask_jwt_extended import jwt_required, get_jwt_identity
+from flask_jwt_extended import jwt_required, get_jwt_identity, get_jwt
 from hbnb.app.services.facade import HBnBFacade
 
 api = Namespace('places', description='Place operations')
 
 facade = HBnBFacade()
+
+
+def is_admin():
+    """Helper function to check if the current user is an admin"""
+    claims = get_jwt()
+    return claims.get('is_admin', False)
 
 # Define the place model for input validation
 place_model = api.model('Place', {
@@ -213,9 +219,10 @@ class PlaceResource(Resource):
         print(f"  Current User ID (from token): {current_user_id}")
         print(f"  Place Owner ID: {existing_place.owner.id}")
         print(f"  Match: {existing_place.owner.id == current_user_id}")
+        print(f"  Is Admin: {is_admin()}")
         
-        # Check if the current user is the owner of the place
-        if str(existing_place.owner.id) != str(current_user_id):
+        # Check if the current user is the owner of the place or is admin
+        if str(existing_place.owner.id) != str(current_user_id) and not is_admin():
             api.abort(403, 'Unauthorized: You can only modify your own places')
 
         # Validate owner if being updated
@@ -273,8 +280,8 @@ class PlaceResource(Resource):
         if not place:
             api.abort(404, 'Place not found')
         
-        # Check if the current user is the owner of the place
-        if place.owner.id != current_user_id:
+        # Check if the current user is the owner of the place or is admin
+        if place.owner.id != current_user_id and not is_admin():
             api.abort(403, 'Unauthorized: You can only delete your own places')
         
         # Delete the place

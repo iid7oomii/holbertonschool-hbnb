@@ -1,10 +1,17 @@
 """Amenity API endpoints for HBnB application"""
 from flask_restx import Namespace, Resource, fields
+from flask_jwt_extended import jwt_required, get_jwt
 from hbnb.app.services.facade import HBnBFacade
 
 api = Namespace('amenities', description='Amenity operations')
 
 facade = HBnBFacade()
+
+
+def is_admin():
+    """Helper function to check if the current user is an admin"""
+    claims = get_jwt()
+    return claims.get('is_admin', False)
 
 # Define the amenity model for input validation
 amenity_model = api.model('Amenity', {
@@ -44,8 +51,14 @@ class AmenityList(Resource):
     @api.response(201, 'Amenity successfully created')
     @api.response(400, 'Invalid input data')
     @api.response(409, 'Amenity with this name already exists')
+    @api.response(403, 'Admin privileges required')
+    @jwt_required()
     def post(self):
-        """Create a new amenity"""
+        """Create a new amenity (requires admin privileges)"""
+        # Check if user is admin
+        if not is_admin():
+            api.abort(403, 'Admin privileges required')
+        
         amenity_data = api.payload
 
         # Check if amenity with same name already exists
@@ -92,8 +105,14 @@ class AmenityResource(Resource):
     @api.response(404, 'Amenity not found')
     @api.response(400, 'Invalid input data')
     @api.response(409, 'Amenity with this name already exists')
+    @api.response(403, 'Admin privileges required')
+    @jwt_required()
     def put(self, amenity_id):
-        """Update amenity information"""
+        """Update amenity information (requires admin privileges)"""
+        # Check if user is admin
+        if not is_admin():
+            api.abort(403, 'Admin privileges required')
+        
         amenity_data = api.payload
 
         # Check if amenity exists

@@ -41,9 +41,42 @@ part3/
 
 ### Tasks Completed
 - [x] Task 0: Application Factory Configuration
+- [x] Task 1: User Model with Password Hashing (bcrypt)
+- [x] Task 2: JWT Authentication Implementation
+- [x] Task 3: Authenticated User Access Endpoints
+- [x] Task 4: Administrator Access Endpoints
 
-### Next Tasks
-- [ ] Task 1: Modify User Model (Password hashing)
-- [ ] Task 2: JWT Authentication
-- [ ] Task 3: Authorization & Role-based Access Control
-- [ ] Task 4: Database Integration (SQLite/MySQL)
+### Features
+
+#### Authentication & Authorization
+- **JWT-based Authentication**: Secure token-based authentication
+- **Password Hashing**: Bcrypt for secure password storage
+- **Role-Based Access Control**: Admin and regular user roles
+- **Protected Endpoints**: Authentication required for sensitive operations
+
+#### Admin Privileges
+- Create and manage users
+- Create and modify amenities
+- Bypass ownership restrictions on places and reviews
+- Full system administration capabilities
+
+#### API Endpoints
+All endpoints are documented and accessible at `/api/v1/`
+
+### Testing
+
+#### Quick Test
+```bash
+# Run the PowerShell test script
+.\test_admin_features.ps1
+
+# Or use the bash script (Git Bash/WSL)
+./test_admin_features.sh
+```
+
+#### Manual Testing
+See [ADMIN_FEATURES.md](ADMIN_FEATURES.md) for detailed testing instructions.
+
+### Documentation
+- **ADMIN_FEATURES.md**: Comprehensive guide to admin features
+- **TESTING_GUIDE.md**: General API testing guide

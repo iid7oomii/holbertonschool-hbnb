@@ -2,13 +2,20 @@
 User API endpoints for HBnB application
 """
 from flask_restx import Namespace, Resource, fields
-from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity, get_jwt
 from hbnb.app.services.facade import HBnBFacade
 
 api = Namespace('users', description='User operations')
 
 # Create a facade instance
 facade = HBnBFacade()
+
+
+def is_admin():
+    """Helper function to check if the current user is an admin"""
+    claims = get_jwt()
+    return claims.get('is_admin', False)
+
 
 # Define the user model for input validation and documentation
 user_model = api.model('User', {
@@ -55,8 +62,18 @@ class UserList(Resource):
     @api.response(201, 'User successfully created')
     @api.response(400, 'Invalid input data')
     @api.response(409, 'Email already registered')
+    @api.response(403, 'Admin privileges required')
+    @jwt_required(optional=True)
     def post(self):
-        """Register a new user"""
+        """Register a new user (requires admin privileges, except for first user)"""
+        # Allow first user creation without authentication
+        all_users = facade.get_all_users()
+        
+        # If there are existing users, require admin privileges
+        if all_users:
+            if not is_admin():
+                api.abort(403, 'Admin privileges required')
+        
         user_data = api.payload
 
         # Check if email already exists
@@ -97,14 +114,14 @@ class UserResource(Resource):
     @api.response(401, 'Unauthorized')
     @jwt_required()
     def put(self, user_id):
-        """Update user information (requires authentication)"""
+        """Update user information (requires authentication, or admin for any user)"""
         user_data = api.payload
         
         # Get the current user from JWT token
         current_user_id = get_jwt_identity()
         
-        # Users can only update their own profile (unless admin)
-        if current_user_id != user_id:
+        # Users can only update their own profile unless they are admin
+        if current_user_id != user_id and not is_admin():
             api.abort(401, 'Unauthorized to update this user')
 
         # Check if user exists
