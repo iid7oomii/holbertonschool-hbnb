@@ -526,7 +526,7 @@ For more detailed information, see:
 - **Application**: http://127.0.0.1:8000/
 - **API Documentation**: http://127.0.0.1:8000/api/v1/
 - **Admin Panel**: http://127.0.0.1:8000/admin.html
-- **GitHub**: Repository link
+- **GitHub**: [Repository link](https://github.com/iid7oomii/holbertonschool-hbnb/tree/main)
 
 ---
 
