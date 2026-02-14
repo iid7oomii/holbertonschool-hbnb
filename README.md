@@ -1,12 +1,12 @@
-# 🏠 HBnB Evolution - Holberton School Project
+#  HBnB Evolution - Holberton School Project
 
-## 📋 Project Overview
+##  Project Overview
 
 **HBnB Evolution** is a comprehensive educational project to build an AirBnB-like application, developed in progressive stages. The project aims to apply best practices in software engineering, system design, and REST API development.
 
 ---
 
-## 🎯 Project Objectives
+##  Project Objectives
 
 - Build a robust architecture using **3-Layer Architecture Pattern**
 - Implement **Facade Pattern** for complexity management and layer separation
@@ -17,7 +17,7 @@
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```
 holbertonschool-hbnb/
@@ -37,12 +37,37 @@ holbertonschool-hbnb/
 │   ├── test_*.py          # API Tests
 │   └── curl_tests.sh      # cURL Tests
 │
+├── part3/                  # Enhanced Backend with Authentication & Database
+│   ├── hbnb/              # Backend Application
+│   │   └── app/
+│   │       ├── api/       # REST API with JWT Authentication
+│   │       ├── models/    # SQLAlchemy Models
+│   │       ├── services/  # Facade Pattern
+│   │       └── persistence/ # SQLAlchemy Repository
+│   ├── config.py          # Flask Configuration
+│   ├── run.py             # Application Entry Point
+│   ├── init_db.py         # Database Initialization
+│   ├── requirements.txt   # Backend Dependencies
+│   └── README.md          # Backend Documentation
+│
+├── part4/                  # Complete Web Client (Full Stack)
+│   ├── web_client/        # Frontend Application
+│   │   ├── css/           # Styling (Liquid Button Effect)
+│   │   ├── scripts/       # JavaScript (8 modules + Three.js)
+│   │   ├── images/        # Assets (23 images)
+│   │   └── *.html         # 7 HTML Pages
+│   ├── hbnb/              # Backend (from Part 3)
+│   ├── seed_data.json     # Initial Data (3 users, 6 places)
+│   ├── run.py             # Server (port 8000)
+│   └── README.md          # Complete Documentation
+│
+├── instractions           # Technical Documentation & Interview Prep
 └── README.md              # This File
 ```
 
 ---
 
-## 🏗️ Architecture
+##  Architecture
 
 ### 3-Layer Architecture
 
@@ -72,7 +97,7 @@ holbertonschool-hbnb/
 
 ---
 
-## 📦 Part 1: Technical Documentation (UML)
+##  Part 1: Technical Documentation (UML)
 
 ### Contents
 
@@ -86,40 +111,40 @@ holbertonschool-hbnb/
 
 ### Available Documentation
 
-- [📄 README - Part 1](part1/README.md)
-- [📊 Package Diagram](part1/Diagram/1-Diagram_package.md)
-- [🎨 Business Logic Diagram](part1/Diagram/2-Diagram_BussinessLogic.md)
-- [🔄 Sequence Diagrams](part1/Diagram/)
+- [ README - Part 1](part1/README.md)
+- [ Package Diagram](part1/Diagram/1-Diagram_package.md)
+- [ Business Logic Diagram](part1/Diagram/2-Diagram_BussinessLogic.md)
+- [ Sequence Diagrams](part1/Diagram/)
 
 ### Business Rules
 
-#### 👤 Users
+####  Users
 
 - Each user has: `first_name`, `last_name`, `email`, `password`, `is_admin`
 - Email **must be unique**
 - Operations: Create, Update, Delete
 
-#### 🏘️ Places
+####  Places
 
 - Place information: `title`, `description`, `price`, `latitude`, `longitude`
 - Each place belongs to an **owner** (User)
 - Can be linked to multiple **amenities**
 - Operations: Full CRUD
 
-#### ⭐ Reviews
+####  Reviews
 
 - Each review is linked to a **Place** and a **User**
 - Contains: `rating`, `comment`
 - Users **cannot** review their own places
 
-#### 🛋️ Amenities
+####  Amenities
 
 - Simple information: `name`, `description`
 - Can be associated with multiple places
 
 ---
 
-## 🚀 Part 2: Business Logic & API Implementation
+##  Part 2: Business Logic & API Implementation
 
 ### Technologies Used
 
@@ -131,13 +156,13 @@ holbertonschool-hbnb/
 
 ### Implemented Features
 
-✅ Full **CRUD Operations** for all entities  
-✅ Comprehensive **Data Validation**  
-✅ **Business Rules Enforcement**  
-✅ **RESTful API Design**  
-✅ **Swagger/OpenAPI Documentation**  
-✅ **Automated Testing**  
-✅ **Error Handling**
+ Full **CRUD Operations** for all entities  
+ Comprehensive **Data Validation**  
+ **Business Rules Enforcement**  
+ **RESTful API Design**  
+ **Swagger/OpenAPI Documentation**  
+ **Automated Testing**  
+ **Error Handling**
 
 ### API Endpoints
 
@@ -147,7 +172,7 @@ holbertonschool-hbnb/
 http://localhost:5000/api/v1
 ```
 
-#### 👥 Users API
+####  Users API
 
 | Method | Endpoint           | Description              |
 | ------ | ------------------ | ------------------------ |
@@ -161,16 +186,16 @@ http://localhost:5000/api/v1
 ```json
 POST /api/v1/users/
 {
-  "first_name": "John",
-  "last_name": "Doe",
-  "email": "john.doe@example.com",
+  "first_name": "Abdulrahman",
+  "last_name": "Alghamdi",
+  "email": "Abdulrahman@example.com",
   "is_admin": false
 }
 ```
 
 ---
 
-#### 🛋️ Amenities API
+####  Amenities API
 
 | Method | Endpoint                  | Description                 |
 | ------ | ------------------------- | --------------------------- |
@@ -190,7 +215,7 @@ POST /api/v1/amenities/
 
 ---
 
-#### 🏠 Places API
+####  Places API
 
 | Method | Endpoint             | Description              |
 | ------ | -------------------- | ------------------------ |
@@ -216,7 +241,7 @@ POST /api/v1/places/
 
 ---
 
-#### ⭐ Reviews API
+####  Reviews API
 
 | Method   | Endpoint                     | Description                |
 | -------- | ---------------------------- | -------------------------- |
@@ -241,13 +266,171 @@ POST /api/v1/reviews/
 
 ---
 
-## 🛠️ Installation & Setup
+## 🔐 Part 3: Backend with Authentication & Database
+
+### Key Features
+
+- **JWT Authentication**: Secure token-based authentication with 1-hour expiration
+- **Password Hashing**: Bcrypt for secure password storage
+- **Role-Based Access Control**: Admin and regular user roles
+- **SQLAlchemy ORM**: Database abstraction layer with SQLite
+- **Session Management**: Proper database connection lifecycle
+- **Protected Endpoints**: Authentication required for sensitive operations
+
+### Technologies Added
+
+```python
+Flask-JWT-Extended    # JWT authentication
+SQLAlchemy           # ORM for database
+bcrypt               # Password hashing
+Flask-CORS           # Cross-origin support
+```
+
+### Database Schema
+
+- **Users Table**: email (unique), password_hash, first_name, last_name, is_admin
+- **Places Table**: title, description, price, location, owner_id (FK)
+- **Reviews Table**: text, rating, user_id (FK), place_id (FK)
+- **Amenities Table**: name (unique)
+
+### Authentication Flow
+
+1. User submits credentials → POST /api/v1/users/login
+2. Backend validates password hash
+3. Generate JWT token (contains user_id, email, is_admin)
+4. Frontend stores token in cookie
+5. Protected routes require: `Authorization: Bearer {token}`
+
+### Admin Privileges
+
+- ✅ Create and manage users
+- ✅ Delete any user, place, or review
+- ✅ Bypass ownership restrictions
+- ✅ Full system administration
+
+### Quick Start (Part 3)
+
+```bash
+cd part3
+pip install -r requirements.txt
+python init_db.py
+python run.py
+# Server runs on http://127.0.0.1:8000
+```
+
+---
+
+## 🌐 Part 4: Complete Web Client (Full Stack)
+
+### 🎨 Frontend Features
+
+- **7 Interactive Pages**: Home, Login, Register, Place Details, Add Review, Add Place, Admin Panel
+- **Modern UI/UX**: Animated Aurora shader background using Three.js WebGL
+- **Liquid Button Effects**: Smooth animated button interactions with bottom-to-top fill
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **Client-Side Filtering**: Filter places by price without server requests
+- **Dynamic Content**: Real-time data loading from API
+
+### 🎯 Pages Overview
+
+1. **index.html**: Home page with places list and price filter
+2. **login.html**: Login form with JWT token storage
+3. **register.html**: User registration with auto-login
+4. **place.html**: Place details with reviews, delete buttons (owner/admin)
+5. **add_review.html**: Review submission form (authenticated users)
+6. **add_place.html**: Create new place with image upload
+7. **admin.html**: User management panel (admin only)
+
+### 🚀 Frontend Technologies
+
+- **HTML5**: Semantic markup
+- **CSS3**: Modern styling with animations
+- **Vanilla JavaScript**: ES6+ features, async/await
+- **Three.js (r128)**: WebGL shader for animated background
+- **Fetch API**: Async HTTP requests
+
+### 🔐 Authentication & Authorization
+
+- **JWT Storage**: Cookie-based with 1-hour expiration
+- **Role-Based UI**: Different views for admin vs regular users
+- **Protected Actions**: Delete buttons only visible to owners/admins
+- **Automatic Redirects**: Unauthenticated users redirected to login
+
+### 🖼️ Image Upload System
+
+- **Multi-part Form Data**: File upload with metadata
+- **Server-Side Storage**: Images saved to `web_client/images/`
+- **Dynamic Display**: Fetched via `<img src="images/{title}.png">`
+- **23 Assets**: 6 place images, 13 amenity icons, 4 UI icons
+
+### 🎨 Design System
+
+- **Color Palette**: Black background (#000000), White text, Gold accents
+- **Liquid Button Effect**: White → Light gray fill on hover (0.5s animation)
+- **Aurora Background**: WebGL shader with animated color waves
+- **Typography**: System fonts with 1.6 line-height
+
+### 📊 Integration Points
+
+```
+Frontend (port 8000)  ←→  Backend API (port 8000)
+     │                          │
+     ├─ Login/Register  →  JWT Authentication
+     ├─ Fetch Places    →  GET /api/v1/places/
+     ├─ Add Place       →  POST /api/v1/places/
+     ├─ Upload Image    →  POST /api/v1/places/upload-image
+     ├─ Add Review      →  POST /api/v1/reviews/
+     ├─ Delete Review   →  DELETE /api/v1/reviews/{id}
+     └─ Admin Panel     →  GET/DELETE /api/v1/users/
+```
+
+### 📦 Seed Data (3 Test Accounts)
+
+```javascript
+// Admin Account
+Email: admin@hbnb.com
+Password: admin123
+
+// Regular User 1
+Email: saleh@hero.com
+Password: hero123
+
+// Regular User 2
+Email: Ahmed@Alghamdi.com
+Password: ahmed123
+```
+
+### 🎯 Quick Start (Part 4)
+
+```bash
+cd part4
+pip install -r requirements.txt
+python init_db.py
+python run.py
+# Open browser: http://127.0.0.1:8000/
+```
+
+### ✨ Key Achievements
+
+- ✅ Complete CRUD operations with authorization
+- ✅ Image upload and display
+- ✅ Three.js animated background (130 lines)
+- ✅ Client-side price filtering
+- ✅ Admin panel for user management
+- ✅ Fully responsive design
+- ✅ 10+ technical challenges solved
+- ✅ Comprehensive documentation for interviews
+
+---
+
+##  Installation & Setup
 
 ### Prerequisites
 
-- Python 3.8+
+- Python 3.11+
 - pip
 - Virtual Environment (recommended)
+- Modern web browser (Chrome, Firefox, Edge)
 
 ### Installation Steps
 
@@ -279,7 +462,7 @@ python run.py
 
 ---
 
-## 🧪 Testing
+##  Testing
 
 ### Pytest Tests
 
@@ -306,11 +489,11 @@ bash curl_tests.sh
 
 ### Manual Testing (Thunder Client / Postman)
 
-See: [📖 TESTING_GUIDE.md](part2/TESTING_GUIDE.md)
+See: [ TESTING_GUIDE.md](part2/TESTING_GUIDE.md)
 
 ---
 
-## 📊 HTTP Status Codes & Errors
+##  HTTP Status Codes & Errors
 
 | Status Code          | Meaning              | When It Appears  |
 | -------------------- | -------------------- | ---------------- |
@@ -324,39 +507,39 @@ See: [📖 TESTING_GUIDE.md](part2/TESTING_GUIDE.md)
 
 ---
 
-## 📝 Data Validation
+##  Data Validation
 
 ### Applied Validation Rules
 
 #### Users
 
-- ✅ Email format validation (must contain @)
-- ✅ Email uniqueness
-- ✅ First name and last name: 1-50 characters
-- ✅ Password: minimum 6 characters
+-  Email format validation (must contain @)
+-  Email uniqueness
+-  First name and last name: 1-50 characters
+-  Password: minimum 6 characters
 
 #### Places
 
-- ✅ Title: 1-100 characters
-- ✅ Price: must be positive
-- ✅ Latitude: -90 to 90
-- ✅ Longitude: -180 to 180
-- ✅ Owner must exist
+-  Title: 1-100 characters
+-  Price: must be positive
+-  Latitude: -90 to 90
+-  Longitude: -180 to 180
+-  Owner must exist
 
 #### Reviews
 
-- ✅ Rating: 1 to 5 stars
-- ✅ Text: 1-1000 characters
-- ✅ User cannot review their own place
+-  Rating: 1 to 5 stars
+-  Text: 1-1000 characters
+-  User cannot review their own place
 
 #### Amenities
 
-- ✅ Name: 1-50 characters
-- ✅ Name uniqueness
+-  Name: 1-50 characters
+-  Name uniqueness
 
 ---
 
-## 🎨 Design Patterns Used
+##  Design Patterns Used
 
 ### 1. Facade Pattern
 
@@ -379,22 +562,22 @@ See: [📖 TESTING_GUIDE.md](part2/TESTING_GUIDE.md)
 
 ---
 
-## 🔮 Part 3 - Coming Soon
+##  Part 3 - Coming Soon
 
 Upcoming Features:
 
-- 🔐 **Authentication & Authorization** (JWT)
-- 💾 **Database Integration** (SQLAlchemy + PostgreSQL/MySQL)
-- 👤 **User Sessions**
-- 🔒 **Password Hashing** (bcrypt)
-- 📧 **Email Validation**
-- 🖼️ **Image Upload** for places
-- 🔍 **Advanced Search & Filtering**
-- 📄 **Pagination**
+-  **Authentication & Authorization** (JWT)
+-  **Database Integration** (SQLAlchemy + PostgreSQL/MySQL)
+-  **User Sessions**
+-  **Password Hashing** (bcrypt)
+-  **Email Validation**
+-  **Image Upload** for places
+-  **Advanced Search & Filtering**
+-  **Pagination**
 
 ---
 
-## 👥 Team
+##  Team
 
 - **ABDULAZIZ ALRASHDI**
 - **ABDULRAHMAN ALGHAMDI**
@@ -402,13 +585,16 @@ Upcoming Features:
 
 ---
 
-## 📚 Resources & Documentation
+##  Resources & Documentation
 
 ### Internal Documentation
 
-- [📄 Part 1 README](part1/README.md) - Architecture Design & UML
-- [📄 Part 2 README](part2/README.md) - API Details & Implementation
-- [📖 Testing Guide](part2/TESTING_GUIDE.md) - Comprehensive Testing Guide
+- [📋 Part 1 README](part1/README.md) - Architecture Design & UML
+- [🔧 Part 2 README](part2/README.md) - API Details & Implementation
+- [🔐 Part 3 README](part3/README.md) - Authentication & Database Integration
+- [🌐 Part 4 README](part4/README.md) - Complete Web Client (Full Stack)
+- [📚 Technical Documentation](instractions) - Complete Implementation Guide & Interview Prep
+- [✅ Testing Guide](part2/TESTING_GUIDE.md) - Comprehensive Testing Guide
 
 ### External Resources
 
@@ -419,7 +605,7 @@ Upcoming Features:
 
 ---
 
-## 🐛 Troubleshooting
+##  Troubleshooting
 
 ### Issue: 404 Not Found
 
@@ -451,13 +637,13 @@ pip install -r requirements.txt
 
 ---
 
-## 📄 License
+##  License
 
 This project is educational and owned by **Holberton School**.
 
 ---
 
-## 📧 Contact
+##  Contact
 
 For questions and inquiries, contact the project team.
 
@@ -465,8 +651,4 @@ For questions and inquiries, contact the project team.
 
 <div align="center">
 
-**Built with ❤️ for Holberton School**
-
-`Version: 2.0 - Part 2 Completed`
-
-</div>
+**Built with love for Holberton School**

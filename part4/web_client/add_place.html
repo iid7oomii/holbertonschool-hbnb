@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBnB - Add Place</title>
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Animated Shader Background -->
+    <div id="shader-background"></div>
+    
+    <header>
+        <a href="index.html" style="display: inline-block;">
+            <img src="images/logo.png" alt="HBnB Logo" class="logo" style="cursor: pointer;">
+        </a>
+        <h1 style="color: #ffffff; font-size: 2em; text-align: center;">Feel Home</h1>
+        <nav>
+            <a href="index.html" class="home-button">Home</a>
+            <a href="login.html" id="login-link" class="login-button">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="add-review">
+            <h2 style="color: var(--gold-color);">Add New Place</h2>
+            <form id="place-form" class="form">
+                <div class="input-group">
+                    <label for="title">Place Title:</label>
+                    <input type="text" id="title" name="title" required maxlength="100">
+                </div>
+
+                <div class="input-group">
+                    <label for="description">Description:</label>
+                    <textarea id="description" name="description" rows="4"></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label for="place-image">Place Image:</label>
+                    <input type="file" id="place-image" name="place-image" accept="image/*">
+                    <small style="color: #666; margin-top: 5px; display: block;">Upload an image for your place (JPG, PNG)</small>
+                </div>
+
+                <div class="input-group">
+                    <label for="price">Price per Night ($):</label>
+                    <input type="number" id="price" name="price" required min="0.01" step="0.01">
+                </div>
+
+                <div class="input-group">
+                    <label for="location">Location:</label>
+                    <input type="text" id="location" name="location" required placeholder="e.g., New York, Dubai, Paris">
+                </div>
+
+                <div class="input-group">
+                    <label>Amenities (Optional):</label>
+                    <div id="amenities-list" style="display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px;">
+                        <!-- Amenities will be loaded here -->
+                    </div>
+                </div>
+
+                <button type="submit" class="submit-button">Add Place</button>
+            </form>
+
+            <p style="text-align: center; margin-top: 20px;">
+                <a href="index.html" style="color: var(--gold-color);">Back to Home</a>
+            </p>
+        </section>
+    </main>
+
+    <footer>
+        <p>All rights reserved © 2026</p>
+    </footer>
+
+    <script src="scripts/animated-background.js"></script>
+    <script src="scripts/add_place.js"></script>
+</body>
+</html>

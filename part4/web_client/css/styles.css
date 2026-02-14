@@ -1,0 +1,422 @@
+:root {
+    --gold-color: #000000;       /* درجة الذهبي التي اخترتها */
+    --dark-red: #420000;         /* أحمر داكن فخم */
+    --black-bg: #ffffff;         /* أزرق فاتح مثل السماء */
+    --card-bg: #ADD8E6;          /* أزرق فاتح للكروت */
+    --border-gold: #FFD700;      /* الخطوط والحدود بالذهبي */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Animated Shader Background */
+#shader-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    overflow: hidden;
+    background: #000000; /* خلفية سوداء تحت الـ Animation */
+}
+
+#shader-background canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background: transparent;
+    color: #ffffff;       /* نص أبيض */
+    line-height: 1.6;
+    position: relative;
+}
+
+header {
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 15px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--gold-color); /* الخطوط بالذهبي */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    height: 40px;
+    filter: drop-shadow(0 0 2px var(--gold-color));
+}
+
+main {
+    position: relative;
+    z-index: 1;
+    min-height: calc(100vh - 200px);
+}
+
+nav {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+nav a {
+    text-decoration: none;
+    color: var(--gold-color);
+    font-weight: bold;
+}
+
+/* Home Button مع Liquid Effect */
+.home-button {
+    background-color: #ffffff;
+    color: #000000 !important;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 2px solid #333333;
+    font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    z-index: 1;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.home-button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: #D3D3D3;
+    transition: height 0.5s ease;
+    z-index: -1;
+}
+
+.home-button:hover {
+    transform: scale(1.05);
+}
+
+.home-button:hover::before {
+    height: 100%;
+}
+
+/* Liquid Button Effect - جميع الأزرار */
+.login-button {
+    background-color: #ffffff;
+    color: #000000 !important;
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: 2px solid #333333;
+    font-weight: 800;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    z-index: 1;
+}
+
+.login-button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: #D3D3D3;
+    transition: height 0.5s ease;
+    z-index: -1;
+}
+
+.login-button:hover {
+    transform: scale(1.05);
+}
+
+.login-button:hover::before {
+    height: 100%;
+}
+
+#filters {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+    background: rgba(95, 158, 160, 0.8);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--gold-color); /* خطوط ذهبية */
+    position: relative;
+    z-index: 2;
+}
+
+#filters label {
+    color: #000000;
+    font-weight: bold;
+}
+
+#price-filter {
+    padding: 8px 15px;
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #333333;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+#country-filter {
+    padding: 8px;
+    background: rgba(70, 130, 180, 0.9);
+    color: var(--gold-color);
+    border: 1px solid var(--gold-color);
+}
+
+#places-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.place-card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    margin: 20px;            /* [متطلب إجباري] */
+    padding: 10px;           /* [متطلب إجباري] */
+    border: 1px solid var(--gold-color); /* الخطوط بالذهبي */
+    border-radius: 10px;     /* [متطلب إجباري] */
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    transition: 0.3s;
+}
+
+.place-card:hover {
+    border-color: var(--dark-red);
+    box-shadow: 0 0 10px var(--gold-color);
+}
+
+.place-card h2, .place-card p {
+    color: #000000;   /* النصوص داخل الكرت سوداء */
+}
+
+.place-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.details-button {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #333333;
+    padding: 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    z-index: 1;
+}
+
+.details-button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: #D3D3D3;
+    transition: height 0.5s ease;
+    z-index: -1;
+}
+
+.details-button:hover {
+    transform: scale(1.05);
+}
+
+.details-button:hover::before {
+    height: 100%;
+}
+
+.place-details, .add-review {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: rgba(173, 216, 230, 0.95);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--gold-color);
+    border-radius: 12px;
+}
+
+.review-card {
+    margin: 20px;            /* [متطلب إجباري] */
+    padding: 10px;           /* [متطلب إجباري] */
+    border: 1px solid var(--gold-color); /* الخطوط بالذهبي */
+    border-radius: 10px;     /* [متطلب إجباري] */
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    position: relative;
+}
+
+/* Delete review button */
+.delete-review-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    float: right;
+    padding: 5px;
+    transition: transform 0.2s ease;
+}
+
+.delete-review-btn:hover {
+    transform: scale(1.2);
+}
+
+.delete-review-btn img {
+    width: 20px;
+    height: 20px;
+    opacity: 0.7;
+}
+
+.delete-review-btn:hover img {
+    opacity: 1;
+}
+
+input, textarea, select {
+    padding: 12px;
+    background: rgba(70, 130, 180, 0.85);
+    backdrop-filter: blur(5px);
+    color: #000000;
+    border: 1px solid var(--gold-color);
+    border-radius: 8px;
+    width: 100%;
+    margin-bottom: 15px;
+    font-family: inherit;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--gold-color);
+    font-weight: bold;
+}
+
+.submit-button, .add-review-button {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #333333;
+    padding: 12px 30px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    z-index: 1;
+}
+
+.submit-button::before, .add-review-button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: #D3D3D3;
+    transition: height 0.5s ease;
+    z-index: -1;
+}
+
+.submit-button:hover, .add-review-button:hover {
+    transform: scale(1.05);
+}
+
+.submit-button:hover::before, .add-review-button:hover::before {
+    height: 100%;
+}
+
+/* زر Delete في Admin Panel */
+.delete-button {
+    background-color: #ffffff;
+    color: #000000;
+    border: 2px solid #333333;
+    padding: 5px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s ease;
+    z-index: 1;
+}
+
+.delete-button::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0;
+    background-color: #D3D3D3;
+    transition: height 0.5s ease;
+    z-index: -1;
+}
+
+.delete-button:hover {
+    transform: scale(1.05);
+}
+
+.delete-button:hover::before {
+    height: 100%;
+}
+
+.place-info h3 {
+    color: var(--gold-color);
+    margin-top: 20px;
+}
+
+#reviews h3 {
+    color: var(--gold-color);
+    margin-bottom: 15px;
+}
+
+#add-review-section {
+    margin-top: 30px;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    border-top: 2px solid var(--gold-color); /* خط ذهبي */
+    background: rgba(173, 216, 230, 0.95);
+    backdrop-filter: blur(10px);
+    color: #000000;
+    margin-top: 40px;
+    position: relative;
+    z-index: 1;
+}

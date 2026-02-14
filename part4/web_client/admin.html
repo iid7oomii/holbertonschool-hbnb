@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBnB - Admin Panel</title>
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Animated Shader Background -->
+    <div id="shader-background"></div>
+    
+    <header>
+        <a href="index.html" style="display: inline-block;">
+            <img src="images/logo.png" alt="HBnB Logo" class="logo" style="cursor: pointer;">
+        </a>
+        <h1 style="color: #ffffff; font-size: 2em; text-align: center;">Admin Panel</h1>
+        <nav>
+            <a href="index.html" class="home-button">Home</a>
+            <a href="#" id="logout-link" class="login-button">Logout</a>
+        </nav>
+    </header>
+
+    <main>
+        <section style="max-width: 1200px; margin: 20px auto; padding: 20px;">
+            <h2 style="color: var(--gold-color); margin-bottom: 30px;">User Management</h2>
+            
+            <!-- Add User Form -->
+            <div style="background: var(--card-bg); padding: 20px; border-radius: 10px; margin-bottom: 30px;">
+                <h3 style="color: var(--gold-color); margin-bottom: 20px;">Add New User</h3>
+                <form id="add-user-form" class="form">
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div class="input-group">
+                            <label for="first_name">First Name:</label>
+                            <input type="text" id="first_name" name="first_name" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="last_name">Last Name:</label>
+                            <input type="text" id="last_name" name="last_name" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="email">Email:</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        
+                        <div class="input-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required minlength="6">
+                        </div>
+                    </div>
+                    
+                    <div class="input-group" style="margin-top: 15px;">
+                        <label style="display: flex; align-items: center; gap: 10px; cursor: pointer;">
+                            <input type="checkbox" id="is_admin" name="is_admin" style="cursor: pointer;">
+                            <span>Admin User</span>
+                        </label>
+                    </div>
+                    
+                    <button type="submit" class="submit-button" style="margin-top: 15px;">Add User</button>
+                </form>
+            </div>
+
+            <!-- Users List -->
+            <div style="background: var(--card-bg); padding: 20px; border-radius: 10px;">
+                <h3 style="color: var(--gold-color); margin-bottom: 20px;">All Users</h3>
+                <div id="users-list">
+                    <p style="text-align: center;">Loading users...</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>All rights reserved © 2026</p>
+    </footer>
+
+    <script src="scripts/animated-background.js"></script>
+    <script src="scripts/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBnB - Add Review</title>
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Animated Shader Background -->
+    <div id="shader-background"></div>
+    
+    <header>
+        <a href="index.html" style="display: inline-block;">
+            <img src="images/logo.png" alt="HBnB Logo" class="logo" style="cursor: pointer;">
+        </a>
+        <h1 style="color: #ffffff; font-size: 2em; text-align: center;">Feel Home</h1>
+        <nav>
+            <a href="index.html" class="home-button">Home</a>
+        </nav>
+    </header>
+
+    <main class="add-review">
+        <form id="review-form" class="form">
+            <h2 style="color: #000000;">Add a Review for this Place</h2>
+            
+            <div class="input-group">
+                <label for="review-text">Your Experience:</label>
+                <textarea id="review-text" required placeholder="Write your review here..."></textarea>
+            </div>
+
+            <div class="input-group">
+                <label for="rating">Rating (1-5):</label>
+                <input type="number" id="rating" min="1" max="5" required>
+            </div>
+
+            <button type="submit" class="submit-button">Submit Review</button>
+        </form>
+    </main>
+
+    <footer>
+        <p>All rights reserved © 2026</p>
+    </footer>
+
+    <script src="scripts/animated-background.js"></script>
+    <script src="scripts/add_review.js"></script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HBnB - Home</title>
+    <link rel="icon" type="image/png" href="images/icon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body>
+    <!-- Animated Shader Background -->
+    <div id="shader-background"></div>
+    
+    <header>
+        <a href="index.html" style="display: inline-block;">
+            <img src="images/logo.png" alt="HBnB Logo" class="logo" style="cursor: pointer;">
+        </a>
+        <h1 style="color: #ffffff; font-size: 2em; text-align: center;">Feel Home</h1>
+        <nav>
+            <a href="index.html" class="home-button">Home</a>
+            <a href="add_place.html" id="add-place-link" class="login-button" style="display: none;">Add Place</a>
+            <a href="admin.html" id="admin-link" class="login-button" style="display: none;">Admin</a>
+            <a href="login.html" id="login-link" class="login-button">Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <section id="filters">
+            <label for="price-filter">Filter by Price:</label>
+            <select id="price-filter">
+                <option value="all">All Prices</option>
+            </select>
+        </section>
+
+        <section id="places-list">
+            </section>
+    </main>
+
+    <footer>
+        <p>All rights reserved © 2026</p>
+    </footer>
+
+    <script src="scripts/animated-background.js"></script>
+    <script src="scripts/index.js"></script>
+</body>
+</html>

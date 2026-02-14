@@ -1,10 +1,65 @@
-instractions
+# Testing files (keep these private)
 test_jwt_authentication.py
 test_jwt_with_curl.sh
 JWT_IMPLEMENTATION.md
-.env
-.env.test
-.pytest_cache/
-__pycache__/
 AUTHENTICATED_ENDPOINTS.md
 test_authenticated_endpoints.py
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+.venv/
+venv/
+ENV/
+env/
+
+# Database
+*.db
+*.sqlite3
+development.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Testing
+.pytest_cache/
+.coverage
+.tox/
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Documentation (local only)
+instractions
+
+# Logs
+*.log
+
+# Environment
+.env
+.env.test
+.env.local
+
+# Temporary files
+*.tmp
+*.bak
+
+# Flask
+instance/
+.webassets-cache

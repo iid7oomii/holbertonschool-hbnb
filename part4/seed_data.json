@@ -1,0 +1,115 @@
+{
+  "users": [
+    {
+      "first_name": "Admin",
+      "last_name": "User",
+      "email": "admin@hbnb.com",
+      "password": "admin123",
+      "is_admin": true
+    },
+    {
+      "first_name": "Saleh",
+      "last_name": "Alshaikh",
+      "email": "saleh@hero.com",
+      "password": "hero123",
+      "is_admin": false
+    },
+    {
+      "first_name": "Ahmed",
+      "last_name": "alghamdi",
+      "email": "Ahmed@Alghamdi.com",
+      "password": "ahmed123",
+      "is_admin": false
+    }
+  ],
+  "amenities": [
+    {"name": "WiFi"},
+    {"name": "Swimming Pool"},
+    {"name": "Free Parking"},
+    {"name": "Gym"},
+    {"name": "Air Conditioning"},
+    {"name": "Kitchen"}
+  ],
+  "places": [
+    {
+      "title": "Luxury Beach Villa",
+      "description": "Beautiful beachfront property with stunning ocean views and direct beach access",
+      "price": 250.0,
+      "latitude": 34.0522,
+      "longitude": -118.2437,
+      "owner_email": "admin@hbnb.com",
+      "amenities": ["WiFi", "Swimming Pool", "Free Parking"]
+    },
+    {
+      "title": "Cozy Mountain Cabin",
+      "description": "Perfect retreat in the mountains with hiking trails nearby and fireplace",
+      "price": 120.0,
+      "latitude": 39.7392,
+      "longitude": -104.9903,
+      "owner_email": "saleh@hero.com",
+      "amenities": ["WiFi", "Free Parking", "Kitchen"]
+    },
+    {
+      "title": "Modern City Apartment",
+      "description": "Stylish apartment in the heart of downtown with great city views",
+      "price": 180.0,
+      "latitude": 40.7128,
+      "longitude": -74.0060,
+      "owner_email": "admin@hbnb.com",
+      "amenities": ["WiFi", "Gym", "Air Conditioning"]
+    },
+    {
+      "title": "Rustic Country House",
+      "description": "Peaceful countryside home perfect for family getaways and relaxation",
+      "price": 95.0,
+      "latitude": 42.3601,
+      "longitude": -71.0589,
+      "owner_email": "Ahmed@Alghamdi.com",
+      "amenities": ["WiFi", "Free Parking", "Kitchen"]
+    },
+    {
+      "title": "Downtown Loft",
+      "description": "Modern loft in the city center with great nightlife and restaurants nearby",
+      "price": 150.0,
+      "latitude": 41.8781,
+      "longitude": -87.6298,
+      "owner_email": "Ahmed@Alghamdi.com",
+      "amenities": ["WiFi", "Gym"]
+    },
+    {
+      "title": "Beachside Bungalow",
+      "description": "Charming bungalow steps from the beach, perfect for summer vacation",
+      "price": 200.0,
+      "latitude": 25.7617,
+      "longitude": -80.1918,
+      "owner_email": "admin@hbnb.com",
+      "amenities": ["WiFi", "Swimming Pool", "Air Conditioning"]
+    }
+  ],
+  "reviews": [
+    {
+      "place_title": "Luxury Beach Villa",
+      "user_email": "Ahmed@Alghamdi.com",
+      "text": "Amazing place! The beach view was stunning and the house was perfect.",
+      "rating": 5
+    },
+    {
+      "place_title": "Cozy Mountain Cabin",
+      "user_email": "admin@hbnb.com",
+      "text": "Great location for hiking. Very peaceful and relaxing.",
+      "rating": 4
+    },
+    {
+      "place_title": "Modern City Apartment",
+      "user_email": "saleh@hero.com",
+      "text": "Perfect location in the city. Apartment was clean and modern.",
+      "rating": 5
+    },
+    {
+      "place_title": "Downtown Loft",
+      "user_email": "saleh@hero.com",
+      "text": "Great nightlife nearby and the loft was stylish and comfortable.",
+      "rating": 4
+    }
+  ]
+}
